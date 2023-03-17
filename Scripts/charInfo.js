@@ -22,6 +22,9 @@ function add_or_remove_HitPoints( Pos_or_Neg_HP_adjustment){
             Char_Info[3]=1
             return `${Char_Info[0]} is at ${Char_Info[3]} hp. ${Char_Info[0]} has used Relentless_Endurance, you can't use this feature again until you finish a Long Rest.`
         }
+        if ( Char_Info[3] < 0 && Char_Info[3] <= -Char_Info[4]) {
+            return `${Char_Info[0]} has died.`
+        }
         return `${Char_Info[0]} is unconcious, with a total hp of ${Char_Info[3]}.`
     }
 }    
