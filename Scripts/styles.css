@@ -1,0 +1,12 @@
+html {
+    background-image: url(https://media.istockphoto.com/photos/old-dirty-and-grunge-paper-texture-picture-id617742228?b=1&k=20&m=617742228&s=612x612&w=0&h=s3wD5N7VsDUV2WUC8GMn7f8W-swNz6e4y_Dz4hlW8oE=);
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+header {
+    text-align: center;
+}
