@@ -8,8 +8,8 @@ const Char_Info = [Char_Name, Char_Race, Char_Class, CurrentHitPoints, MaxHitPoi
 let Relentless_Endurance_Active = true
 
 
-//Function to add of remove hitpoints to a character's total hp
-function add_or_remove_hitPoints( Pos_or_Neg_HP_adjustment){
+//Function to add or remove hitpoints to a character's total hp
+function add_or_remove_HitPoints( Pos_or_Neg_HP_adjustment){
     // If Positive number, add to HP
     if( Pos_or_Neg_HP_adjustment > 0 ){
         Char_Info[3] += Pos_or_Neg_HP_adjustment
