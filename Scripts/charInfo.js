@@ -122,14 +122,14 @@ console.log( Wam_Info );
 
 
 
-function ressurection( Character ) {
-    console.log(`-----\nUsing ressurection on ${Character.Name}\n-----`);
+function resurrection( Character ) {
+    console.log(`-----\nUsing resurrection on ${Character.Name}\n-----`);
     if ( Character.CurrentHitPoints === 'dead' ) {
         Character.CurrentHitPoints = 1
         return `${Character.Name} has been resurrected. ${Character.Name} is now at ${Character.CurrentHitPoints} hitpoint.`
     }
 }
 
-console.log( ressurection(Wam_Info) );
+console.log( resurrection(Wam_Info) );
 console.log( longRest(Wam_Info) );
 console.log( `Checking Relentless_Endurance_Active for Wam, should state true ---> ${Wam_Info.Relentless_Endurance_Active}` );
