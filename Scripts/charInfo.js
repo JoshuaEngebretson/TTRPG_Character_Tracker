@@ -1,87 +1,90 @@
-let Char_Name = String;
-let Char_Race = String;
-let Char_Class = String;
-let CurrentHitPoints = Number;
-let MaxHitPoints = Number;
-let Armor_class = Number;
+let Wam_Info = {
+    Name: 'Wam',
+    Race: 'Half-Orc',
+    Class: 'Fighter',
+    CurrentHitPoints: 10,
+    MaxHitPoints: 15,
+    Armor_class: 15,
+    Negative_MaxHitPoints: -15,
+    Relentless_Endurance_Active: true
+};
 
+let Seahawk_Info = {
+    Name: 'Seahawk',
+    Race: 'Human',
+    Class: 'Bard',
+    CurrentHitPoints: 11,
+    MaxHitPoints: 12,
+    Armor_class: 14,
+    Negative_MaxHitPoints: -12
+};
 
-Char_Name = 'Wam';
-Char_Race = 'Half-Orc';
-Char_Class = 'Fighter';
-CurrentHitPoints = 10;
-MaxHitPoints = 15;
-Armor_class = 15;
+let arrayOfCharactersInfo = [ Wam_Info, Seahawk_Info ];
 
-let Negative_MaxHitPoints = (MaxHitPoints* -1)
-let Char_Info = ['Character Name:', Char_Name, 'Character Race:', Char_Race, 'Class = '+Char_Class, 'Current Hit Points:', CurrentHitPoints, 'Max Hit Points:', MaxHitPoints, 'Armor Class:', Armor_class];
-let Relentless_Endurance_Active = true
-
-let abbriged_Char_Info = [Char_Info[1], Char_Info[5], Char_Info[6], Char_Info[7], Char_Info[8]]
-
-console.log('Char_Info =', Char_Info);
-console.log('abbriged_Char_Info =', abbriged_Char_Info);
-console.log('Negative_MaxHitPoits =', Negative_MaxHitPoints);
+console.log( Wam_Info );
+console.log( Seahawk_Info );
+console.log( arrayOfCharactersInfo );
 
 
 //Function to add or remove hitpoints to a character's total hp
-function add_or_remove_HitPoints( Pos_or_Neg_HP_adjustment){
-    Char_Info[6] += Pos_or_Neg_HP_adjustment
-    abbriged_Char_Info[2] += Pos_or_Neg_HP_adjustment
+function add_or_remove_HitPoints( Pos_or_Neg_HP_adjustment, Character ){
+    console.log(`${Character.Name}`);
+    let MaxHitPoints = Character.MaxHitPoints;
+    let CurrentHitPoints = Character.CurrentHitPoints;
+    let Negative_MaxHitPoints = (MaxHitPoints * -1);
+    CurrentHitPoints += Pos_or_Neg_HP_adjustment;
     // If Positive number, add to HP
     if( Pos_or_Neg_HP_adjustment > 0 ){
         // Check if at or below MaxHitPoints
-        if (Char_Info[6] >= Char_Info[8]) {
-            Char_Info[6] = Char_Info[8]
-            abbriged_Char_Info[2] = abbriged_Char_Info[4]
-            return `${Char_Info[1]} has healed ${Pos_or_Neg_HP_adjustment} to  a current hp total of ${Char_Info[6]} of a max ${Char_Info[8]} hp.`
+        if ( CurrentHitPoints >= MaxHitPoints ) {
+            CurrentHitPoints = MaxHitPoints
+            return `${Character.Name} has healed ${Pos_or_Neg_HP_adjustment} to  a current hp total of ${CurrentHitPoints}of a max ${MaxHitPoints} hp.`
         }
-        return `${Char_Info[1]} has healed ${Pos_or_Neg_HP_adjustment} and is currently at ${Char_Info[6]} hp.`
+        return `${Character.Name} has healed ${Pos_or_Neg_HP_adjustment} and is currently at ${CurrentHitPoints} hp.`
     }
     // If Negative number, remove from HP
     else if ( Pos_or_Neg_HP_adjustment < 0 ){
-        if ( Char_Info[6] <= 0 && Char_Info[6] > Negative_MaxHitPoints){
-            if ( Char_Info[3] === 'Half-Orc' && Relentless_Endurance_Active === true || Char_Info[3] === 'Orc' && Relentless_Endurance_Active === true ) {
-                Relentless_Endurance_Active = false
-                Char_Info[6] = 1
-                abbriged_Char_Info[2] = 1
-                return `${Char_Info[1]} is at ${Char_Info[6]} hp. ${Char_Info[1]} has used Relentless Endurance and can't use this feature again until they finish a Long Rest.`
-            }
-            else if ( Char_Info[6] <= Negative_MaxHitPoints) {
-                Char_Info[6] = 'dead'
-                abbriged_Char_Info[2] = 'dead'
-                return `${Char_Info[1]} has died.`
+        if ( CurrentHitPoints <= 0 && CurrentHitPoints > Negative_MaxHitPoints ){
+            if ( Character.Race === 'Half-Orc' && Character.Relentless_Endurance_Active === true || Character.Race === 'Orc' && Character.Relentless_Endurance_Active === true ) {
+                Character.Relentless_Endurance_Active = false
+                CurrentHitPoints = 1
+                return `${Character.Name} is at ${CurrentHitPoints} hp. ${Character.Name} has used Relentless Endurance and can't use this feature again until they finish a Long Rest.`
             }
             else {
-            Char_Info[6] = 0
-            abbriged_Char_Info[2] = 0
-            return `${Char_Info[1]} is unconcious. ${Char_Info[1]} has ${Char_Info[6]} hp.`
+            CurrentHitPoints = 0
+            return `${Character.Name} is unconcious. ${Character.Name} has ${CurrentHitPoints} hp.`
             }
         }
+    else if ( CurrentHitPoints <= Negative_MaxHitPoints ) {
+        CurrentHitPoints = 'dead'
+        return `${Character.Name} has died.`
+    }
     }
 }    
 
+
 //Testing function
-console.log('add_or_remove_HitPoints - Should state 9 as we are subtracting 1 from 10:', add_or_remove_HitPoints(-1));
-console.log(abbriged_Char_Info);
+console.log( 'add_or_remove_HitPoints - Should state 9 as we are subtracting 1 from 10:', add_or_remove_HitPoints(-1, Wam_Info));
 
-console.log('add_or_remove_HitPoints - Should state 1 as we are subtracting 9 from 9 which would, but Relentless Endurance sets us to 1hp if active:', add_or_remove_HitPoints(-9));
-console.log(abbriged_Char_Info);
 
-console.log('add_or_remove_HitPoints - Should state 15 as we are adding 16 to 1 with a max hp of 15:', add_or_remove_HitPoints(16));
-console.log(abbriged_Char_Info);
+console.log( 'add_or_remove_HitPoints - Should state 1 as we are subtracting 9 from 9 which would, but Relentless Endurance sets us to 1hp if active:', add_or_remove_HitPoints(-9), Wam_Info);
 
-console.log('add_or_remove_HitPoints - Should state "'+Char_Info[1],' is unconcious":', add_or_remove_HitPoints(-29));
-console.log(abbriged_Char_Info);
 
-console.log('add_or_remove_HitPoints - Should state 7:', add_or_remove_HitPoints(7));
-console.log(abbriged_Char_Info);
+console.log( 'add_or_remove_HitPoints - Should state 15 as we are adding 16 to 1 with a max hp of 15:', add_or_remove_HitPoints( 16, Wam_Info ) );
 
-console.log('add_or_remove_HitPoints - Should state "'+Char_Info[1], 'has died.":', add_or_remove_HitPoints(-22));
-console.log(abbriged_Char_Info);
 
-console.log('Checking Relentless_Endurance_Active, should state false:', Relentless_Endurance_Active);
+console.log( 'add_or_remove_HitPoints - Should state "'+ Char_Info[1],' is unconcious":', add_or_remove_HitPoints( -29, Wam_Info ) );
 
-console.log('Char_Info =', Char_Info);
-console.log('abbriged_Char_Info =', abbriged_Char_Info);
+
+console.log( 'add_or_remove_HitPoints - Should state 7:', add_or_remove_HitPoints( 7, Wam_Info ) );
+
+
+console.log( 'add_or_remove_HitPoints - Should state "' + Char_Info[1], 'has died.":', add_or_remove_HitPoints( -22, Wam_Info ) );
+
+
+console.log( 'Checking Relentless_Endurance_Active, should state false:', Wam_Info.Relentless_Endurance_Active );
+
+
+console.log( `Wam's current character info: ${Wam_Info}` );
+
 
