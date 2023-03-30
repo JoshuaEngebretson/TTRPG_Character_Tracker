@@ -88,14 +88,19 @@ function longRest( Character ) {
     if ( Character.CurrentHitPoints === 'dead' ) { // if dead unable to take longRest
         return `${Character.Name} is dead and unable to gain the benefits of a long rest.`
     } // End if dead
-    if ( Character.CurrentHitPoints >= 0 || Character.CurrentHitPoints < 0 ){ // Block test what to do with CurrentHitPoints, may want to break into own function later.
-        if ( Character.CurrentHitPoints > 0 ){ // Reset HP to Max if above 0
-            Character.CurrentHitPoints = Character.MaxHitPoints
-        } // End Reset HP
-        else if ( Character.CurrentHitPoints === 0 ){ // if CurrentHitPoints at 0 (can never end a turn below 0 except if dead, then CurrentHitPoints equals 'dead')
-            return `🚫 ${Character.Name} is unconcious and unable to gain the benefits of a long rest until healed. 🚫`
+    if ( Character.CurrentHitPoints != undefined ) { // Block test what to do with CurrentHitPoints, may want to break into own function later.
+        if ( Character.CurrentHitPoints >= 0 || Character.CurrentHitPoints < 0 ){ 
+            if ( Character.CurrentHitPoints > 0 ) { // Reset HP to Max if above 0
+                Character.CurrentHitPoints = Character.MaxHitPoints
+            } // End Reset HP
+            else if ( Character.CurrentHitPoints === 0 ) { // if CurrentHitPoints at 0 (can never end a turn below 0 except if dead, then CurrentHitPoints equals 'dead')
+                return `🚫 ${Character.Name} is unconcious and unable to gain the benefits of a long rest until healed. 🚫`
+            }
+            else { // if CurrentHitPoint is less than 0 points back to function where this issue likely took place.
+                console.log( '🚫🚫🚫\n||ERROR||\n Check in Add_RemoveHitPoints to see if giving a value less than 0 that is not being corrected to 0' );
+            }
         }
-        else { // Error message if Character.CurrentHitPoints is NaN and isn't set to 'dead' (which already would have kicked out of function)
+        else { // Error message if Character.CurrentHitPoints is NaN 
             console.log( '🚫🚫🚫\n||ERROR||\n'+ Character.Name + "'s .CurrentHitPoints is NaN\nValue of .CurrentHitPoints = " + Character.CurrentHitPoints + '\n|END ERROR|\n-----' );
         }
     } // End what to do with CurrentHitPoints
@@ -181,7 +186,3 @@ function SeahawkTest() { // Console Logs of Seahawk Tests
     console.log(`Finished SeahawkTest\n########################################`);
 } // End Seahawk Tests
 SeahawkTest()
-
-/*
-git commit -m "Renamed addOrRemoveHitPoints to Add_RemoveHitPoints. Created initial WamTest1, a function that includes all tests for Wam
- */
