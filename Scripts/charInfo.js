@@ -79,7 +79,7 @@ function add_or_remove_HitPoints( Pos_or_Neg_HP_adjustment, Character ){
             return `${Character.Name} has taken ${-(Pos_or_Neg_HP_adjustment)} point(s) of damage and is now at ${Character.CurrentHitPoints}`
         }
     }
-};
+}; // end add_or_remove_HitPoints
 
 
 //Testing function
@@ -108,13 +108,25 @@ function longRest( Character ) {
     if ( Character.CurrentHitPoints === 'dead' ) {
         return `${Character.Name} is dead and unable to gain the benefits of a long rest`
     }
-    Character.Relentless_Endurance_Active = true
-    Character.actionSurge = true
+    if ( Character.Race === 'Half-Orc' || Character.Race === 'Orc' ) {
+        Character.Relentless_Endurance_Active = true
+    }
+    if( Character.Class === 'Fighter' ){
+        Character.actionSurge = true
+    }
     if ( Character.CurrentHitPoints > 0 ){
         Character.CurrentHitPoints = Character.MaxHitPoints
     }
+    if( Character.ResurrectionSickness ){ // if RessurrectionSickness
+        if ( Character.ResurrectionSickness < 0 ) { // if RessurrectionSickness is less than 0
+            Character.ResurrectionSickness += 1 // reduce negative of ResurrectionSickness
+        }
+        else if ( Character.ResurrectionSickness >= 0 ) { // if RessurrectionSickness is greater than or equal to 0
+            delete Character.ResurrectionSickness // removes property of ResurrectionSickness
+        }
+    }
     return `${Character.Name} has taken a longRest`
-}
+} // end longRest
 
 console.log( longRest(Wam_Info) );
 console.log( `Checking Relentless_Endurance_Active for Wam, should state false ---> ${Wam_Info.Relentless_Endurance_Active}` );
@@ -125,10 +137,13 @@ console.log( Wam_Info );
 function resurrection( Character ) {
     console.log(`-----\nUsing resurrection on ${Character.Name}\n-----`);
     if ( Character.CurrentHitPoints === 'dead' ) {
-        Character.CurrentHitPoints = 1
-        return `${Character.Name} has been resurrected. ${Character.Name} is now at ${Character.CurrentHitPoints} hitpoint.`
+        Character.CurrentHitPoints = Character.MaxHitPoints
+        // the target takes a -4 penalty to all Attack rolls, Saving Throws, and Ability Checks
+            // Everytime the target finishes a longRest, the penalty is reduced by 1 until it disappears
+        Character.ResurrectionSickness = -4 
+        return `${Character.Name} has been resurrected. ${Character.Name} is now at ${Character.CurrentHitPoints} hitpoints.`
     }
-}
+} // end resurrection
 
 console.log( resurrection(Wam_Info) );
 console.log( longRest(Wam_Info) );
