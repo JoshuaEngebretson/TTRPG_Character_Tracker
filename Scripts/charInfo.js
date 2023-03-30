@@ -62,7 +62,8 @@ function Add_RemoveHitPoints( Pos_or_Neg_HP_adjustment, Character ){
             }
             else {
                 console.log(`Test 4 (reduced to or below 0, but not beyond NegativeMax)`);
-                Character.CurrentHitPoints = 0
+                CurrentHitPoints = 0
+                Character.CurrentHitPoints = CurrentHitPoints
                 return `${Character.Name} is unconcious. ${Character.Name} has ${CurrentHitPoints} hp.`
             }
         }
