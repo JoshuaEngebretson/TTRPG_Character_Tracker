@@ -107,9 +107,14 @@ function longRest( Character ) {
     if ( Character.Race === 'Half-Orc' || Character.Race === 'Orc' ) { // LongRest functionality if .Race equals Half-Orc or Orc
         Character.Relentless_Endurance_Active = true
     } // End if Half-Orc or Orc
-    if( Character.Class === 'Fighter' ){ // LongRest functionality if .Class equals Fighter
-        Character.actionSurge = true
-    } // End if Fighter
+    if ( Character.Class != undefined ) { // LongRest differences based on .Class
+        if( Character.Class === 'Fighter' ){ // LongRest functionality if .Class equals Fighter
+            Character.actionSurge = true
+        } // End if Fighter
+        /*
+        Add other classes with longRest specific functionality.
+        */
+    } // End test based on .Class
     if( Character.ResurrectionSickness ){ // if ResurrectionSickness
         if ( Character.ResurrectionSickness >= 0 ) { // if RessurrectionSickness is greater than or equal to 0
             delete Character.ResurrectionSickness // removes property of ResurrectionSickness
