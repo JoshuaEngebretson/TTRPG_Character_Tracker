@@ -22,16 +22,14 @@ let Seahawk_Info = {
 
 let arrayOfCharactersInfo = [ Wam_Info, Seahawk_Info ];
 
-
 console.log( Wam_Info );
 console.log( Seahawk_Info );
 console.log( arrayOfCharactersInfo );
 
 
-
 //Function to add or remove hitpoints to a character's total hp
-function add_or_remove_HitPoints( Pos_or_Neg_HP_adjustment, Character ){
-    console.log(`-----\nusing add_or_remove_HitPoints function to adjust hp for ${Character.Name}\n-----`);
+function Add_RemoveHitPoints( Pos_or_Neg_HP_adjustment, Character ){
+    console.log(`\nUsing add_or_remove_HitPoints function to adjust hp for ${Character.Name}\n\n`);
     let MaxHitPoints = Character.MaxHitPoints;
     let CurrentHitPoints = Character.CurrentHitPoints;
     let Negative_MaxHitPoints = (MaxHitPoints * -1);
@@ -82,27 +80,6 @@ function add_or_remove_HitPoints( Pos_or_Neg_HP_adjustment, Character ){
 }; // end add_or_remove_HitPoints
 
 
-//Testing function
-console.log( `add_or_remove_HitPoints - Should state 9 as we are subtracting 1 from 10 ---> ${add_or_remove_HitPoints(-1, Wam_Info)}`);
-
-console.log( `add_or_remove_HitPoints - Should state 1 as we are subtracting 9 from 9 which would, but Relentless Endurance sets us to 1hp if active ---> ${add_or_remove_HitPoints( -9, Wam_Info )}`);
-
-console.log( `add_or_remove_HitPoints - Should state 15 as we are adding 16 to 1 with a max hp of 15 ---> ${add_or_remove_HitPoints( 16, Wam_Info )}` );
-
-console.log( `add_or_remove_HitPoints - Should state ${Wam_Info.Name} is unconcious ---> ${add_or_remove_HitPoints( -29, Wam_Info )}` );
-
-console.log( `add_or_remove_HitPoints - Should state 7 ---> ${add_or_remove_HitPoints( 7, Wam_Info )}` );
-
-console.log( `add_or_remove_HitPoints - Should state ${Wam_Info.Name} has died. ---> ${add_or_remove_HitPoints( -22, Wam_Info )}` );
-
-console.log( `Checking Relentless_Endurance_Active for Wam, should state false ---> ${Wam_Info.Relentless_Endurance_Active}` );
-
-
-
-// console.log( `Wam's current character info ---> ${listCharacterInfo(Wam_Info)}` );
-console.log( `Below is Wam's current Info` );
-console.log( Wam_Info );
-
 function longRest( Character ) {
     console.log(`-----\nusing longRest function to Reset ${Character.Name}'s per long rest traits\n-----`);
     if ( Character.CurrentHitPoints === 'dead' ) { // if dead unable to take longRest
@@ -136,11 +113,6 @@ function longRest( Character ) {
     return `${Character.Name} has taken a longRest`
 } // end longRest
 
-console.log( longRest(Wam_Info) );
-console.log( `Checking Relentless_Endurance_Active for Wam, should state false ---> ${Wam_Info.Relentless_Endurance_Active}` );
-console.log( Wam_Info );
-
-
 
 function resurrection( Character ) {
     console.log(`-----\nUsing resurrection on ${Character.Name}\n-----`);
@@ -153,6 +125,56 @@ function resurrection( Character ) {
     }
 } // end resurrection
 
-console.log( resurrection(Wam_Info) );
-console.log( longRest(Wam_Info) );
-console.log( `Checking Relentless_Endurance_Active for Wam, should state true ---> ${Wam_Info.Relentless_Endurance_Active}` );
+//Testing function
+function WamTest() { // Console Logs of Wam Tests
+    console.log(`########################################\nInside WamTest`);
+    console.log( `👇 👇 Wam's current info BEFORE Tests 👇 👇` );
+    console.log( Wam_Info );
+    console.log( `Add_RemoveHitPoints - Should state 9 as we are subtracting 1 from 10 ---> ${Add_RemoveHitPoints(-1, Wam_Info)}`);
+    console.log( `Add_RemoveHitPoints - Should state 1 as we are subtracting 9 from 9 which would, but Relentless Endurance sets us to 1hp if active ---> ${Add_RemoveHitPoints( -9, Wam_Info )}`);
+    console.log( `Add_RemoveHitPoints - Should state 15 as we are adding 16 to 1 with a max hp of 15 ---> ${Add_RemoveHitPoints( 16, Wam_Info )}` );
+    console.log( `Add_RemoveHitPoints - Should state ${Wam_Info.Name} is unconcious ---> ${Add_RemoveHitPoints( -29, Wam_Info )}` );
+    console.log( `Add_RemoveHitPoints - Should state 7 ---> ${Add_RemoveHitPoints( 7, Wam_Info )}` );
+    console.log( `Add_RemoveHitPoints - Should state ${Wam_Info.Name} has died. ---> ${Add_RemoveHitPoints( -22, Wam_Info )}` );
+    console.log( `Checking Relentless_Endurance_Active for Wam, should state false ---> ${Wam_Info.Relentless_Endurance_Active}` );
+    console.log( `👇 👇 Wam's current info MIDDLE Tests 👇 👇` );
+    console.log( Wam_Info );
+    console.log( longRest(Wam_Info) );
+    console.log( `Checking Relentless_Endurance_Active for Wam, should state false ---> ${Wam_Info.Relentless_Endurance_Active}` );
+    console.log( resurrection(Wam_Info) );
+    console.log( longRest(Wam_Info) );
+    console.log( `Checking Relentless_Endurance_Active for Wam, should state true ---> ${Wam_Info.Relentless_Endurance_Active}` );
+    console.log( `👇 👇 Wam's current info AFTER Tests 👇 👇` );
+    console.log( Wam_Info );
+    console.log(`Finished WamTest\n########################################`);
+} // End Wam Tests
+WamTest()
+
+
+function SeahawkTest() { // Console Logs of Seahawk Tests
+    console.log(`########################################\nInside SeahawkTest`);
+    console.log( `👇 👇 Seahawk's current info BEFORE Tests 👇 👇` );
+    console.log( Seahawk_Info );
+    console.log( `Add_RemoveHitPoints - Should state 10 as we are subtracting 1 from 11 ---> ${Add_RemoveHitPoints(-1, Seahawk_Info)}`);
+    console.log( `Add_RemoveHitPoints - Should state 0 as we are subtracting 10 from 10 ---> ${Add_RemoveHitPoints( -10, Seahawk_Info )}`);
+    console.log( `Add_RemoveHitPoints - Should state 12 as we are adding 16 to 0 with a max hp of 12 ---> ${Add_RemoveHitPoints( 16, Seahawk_Info )}` );
+    console.log( `Add_RemoveHitPoints - Should state ${Seahawk_Info.Name} is unconcious ---> ${Add_RemoveHitPoints( -23, Seahawk_Info )}` );
+    // console.log( `Add_RemoveHitPoints - Should state 7 ---> ${Add_RemoveHitPoints( 7, Seahawk_Info )}` );
+    // console.log( `Add_RemoveHitPoints - Should state ${Seahawk_Info.Name} has died. ---> ${Add_RemoveHitPoints( -22, Wam_Info )}` );
+    // console.log( `Checking Relentless_Endurance_Active for Wam, should state false ---> ${Seahawk_Info.Relentless_Endurance_Active}` );
+    // console.log( `👇 👇 Seahawk's current info MIDDLE Tests 👇 👇` );
+    // console.log( Seahawk_Info );
+    // console.log( longRest(Seahawk_Info) );
+    // console.log( `Checking Relentless_Endurance_Active for Wam, should state false ---> ${Seahawk_Info.Relentless_Endurance_Active}` );
+    // console.log( resurrection(Seahawk_Info) );
+    // console.log( longRest(Seahawk_Info) );
+    // console.log( `Checking Relentless_Endurance_Active for Wam, should state true ---> ${Seahawk_Info.Relentless_Endurance_Active}` );
+    console.log( `👇 👇 Seahawk's current info AFTER Tests 👇 👇` );
+    console.log( Seahawk_Info );
+    console.log(`Finished SeahawkTest\n########################################`);
+} // End Seahawk Tests
+SeahawkTest()
+
+/*
+git commit -m "Renamed addOrRemoveHitPoints to Add_RemoveHitPoints. Created initial WamTest1, a function that includes all tests for Wam
+ */
