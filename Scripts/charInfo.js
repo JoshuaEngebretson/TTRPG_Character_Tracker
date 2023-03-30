@@ -105,26 +105,34 @@ console.log( Wam_Info );
 
 function longRest( Character ) {
     console.log(`-----\nusing longRest function to Reset ${Character.Name}'s per long rest traits\n-----`);
-    if ( Character.CurrentHitPoints === 'dead' ) {
-        return `${Character.Name} is dead and unable to gain the benefits of a long rest`
-    }
-    if ( Character.Race === 'Half-Orc' || Character.Race === 'Orc' ) {
-        Character.Relentless_Endurance_Active = true
-    }
-    if( Character.Class === 'Fighter' ){
-        Character.actionSurge = true
-    }
-    if ( Character.CurrentHitPoints > 0 ){
-        Character.CurrentHitPoints = Character.MaxHitPoints
-    }
-    if( Character.ResurrectionSickness ){ // if RessurrectionSickness
-        if ( Character.ResurrectionSickness < 0 ) { // if RessurrectionSickness is less than 0
-            Character.ResurrectionSickness += 1 // reduce negative of ResurrectionSickness
+    if ( Character.CurrentHitPoints === 'dead' ) { // if dead unable to take longRest
+        return `${Character.Name} is dead and unable to gain the benefits of a long rest.`
+    } // End if dead
+    if ( Character.CurrentHitPoints ){ // Block test what to do with CurrentHitPoints, may want to break into own function later.
+        if ( Character.CurrentHitPoints > 0 ){ // Reset HP to Max if above 0
+            Character.CurrentHitPoints = Character.MaxHitPoints
+        } // End Reset HP
+        else if ( Character.CurrentHitPoints < 0 ){ // 
+            return `${Character.Name} is unconcious and unable to gain the benefits of a long rest until healed.`
         }
-        else if ( Character.ResurrectionSickness >= 0 ) { // if RessurrectionSickness is greater than or equal to 0
+        else { // Error message if Character.CurrentHitPoints is NaN and isn't set to 'dead' (which already would have kicked out of function)
+            console.log( '-----\n||ERROR||\n'+ Character.Name + "'s .CurrentHitPoints is NaN\nValue of .CurrentHitPoints = " + Character.CurrentHitPoints + '\n|END ERROR|\n-----' );
+        }
+    } // End what to do with CurrentHitPoints
+    if ( Character.Race === 'Half-Orc' || Character.Race === 'Orc' ) { // LongRest functionality if .Race equals Half-Orc or Orc
+        Character.Relentless_Endurance_Active = true
+    } // End if Half-Orc or Orc
+    if( Character.Class === 'Fighter' ){ // LongRest functionality if .Class equals Fighter
+        Character.actionSurge = true
+    } // End if Fighter
+    if( Character.ResurrectionSickness ){ // if ResurrectionSickness
+        if ( Character.ResurrectionSickness >= 0 ) { // if RessurrectionSickness is greater than or equal to 0
             delete Character.ResurrectionSickness // removes property of ResurrectionSickness
         }
-    }
+        else { // ELSE (assumes RessurrectionSickness is less than 0)
+            Character.ResurrectionSickness += 1 // reduce negative of ResurrectionSickness
+        }
+    } // End if ResurrectionSickness
     return `${Character.Name} has taken a longRest`
 } // end longRest
 
